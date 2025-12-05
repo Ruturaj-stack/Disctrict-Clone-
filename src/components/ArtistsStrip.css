@@ -1,0 +1,37 @@
+.artists-block {
+  margin: 36px 0;
+}
+
+.artists-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.artists-row::-webkit-scrollbar {
+  height: 6px;
+}
+
+.artists-row::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.artist-pill {
+  min-width: 120px;
+  text-align: center;
+}
+
+.artist-pill img {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 6px;
+  border: 2px solid #ff3c3c;
+}
+
+.artist-pill span {
+  font-size: 13px;
+}

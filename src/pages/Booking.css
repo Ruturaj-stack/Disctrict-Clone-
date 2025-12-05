@@ -1,0 +1,142 @@
+.booking-container {
+  padding: 30px;
+  text-align: center;
+}
+
+.screen {
+  background: #222;
+  color: white;
+  padding: 12px;
+  width: 60%;
+  margin: 0 auto 25px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.seat-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.seat-row {
+  display: flex;
+  gap: 10px;
+}
+
+.seat {
+  width: 42px;
+  height: 42px;
+  background: #e4e4e4;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.seat:hover {
+  background: #c9c9c9;
+}
+
+.selected-seat {
+  background: #ff3c3c;
+  color: white;
+}
+
+.selected-info {
+  margin-top: 25px;
+}
+
+.next-btn {
+  background: #ff3c3c;
+  padding: 12px 24px;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.next-btn:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+.next-btn:hover:not(:disabled) {
+  background: #d62a2a;
+}
+.booked-seat {
+  background: #7f7f7f !important;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.booked-seat:hover {
+  background: #7f7f7f !important;
+}
+
+.movie-name {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.legend {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.legend-item {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+
+.platinum {
+  background: #7d1cb0;
+}
+
+.gold {
+  background: #c19a00;
+}
+
+.silver {
+  background: #8f8f8f;
+}
+
+.seat-A, .seat-B {
+  background: #e5d0ff;
+}
+
+.seat-C, .seat-D {
+  background: #ffe8a3;
+}
+
+.seat-E {
+  background: #dedede;
+}
+
+.selected-seat {
+  background: #ff3c3c !important;
+  color: white;
+}
+
+.booked-seat {
+  background: #7f7f7f !important;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+

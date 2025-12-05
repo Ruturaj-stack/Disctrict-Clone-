@@ -1,13 +1,59 @@
-body {
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", "Poppins", sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  background: linear-gradient(180deg, #f4efff 0%, #ffffff 60%);
+  color: #1c1c1c;
+}
+
+/* page width like District */
+.container {
+  max-width: 1280px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+/* Section title */
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 28px 0 18px;
+}
+
+/* movie card style */
+.section-card {
+  width: 230px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+  transition: transform 0.25s ease;
+  cursor: pointer;
+}
+
+.section-card:hover {
+  transform: translateY(-5px);
+}
+
+.section-card img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+.section-card-body {
+  padding: 14px;
+}
+
+.section-card-body h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+.section-card-body p {
+  font-size: 14px;
+  opacity: 0.8;
 }

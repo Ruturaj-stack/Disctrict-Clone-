@@ -1,0 +1,72 @@
+.bookings-container {
+  padding: 30px;
+}
+
+.bookings-container h1 {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.no-bookings {
+  font-size: 18px;
+  color: #777;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.bookings-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.ticket-card {
+  width: 220px;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #e2e2e2;
+  background: #fff;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+}
+
+.ticket-card img {
+  width: 100%;
+  height: 300px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.ticket-card h3 {
+  margin: 10px 0 5px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.ticket-card p {
+  margin: 3px 0;
+  font-size: 15px;
+}
+
+@media (max-width: 768px) {
+  .bookings-grid {
+    justify-content: center;
+  }
+}
+
+.delete-btn {
+  margin-top: 10px;
+  background: #ff3c3c;
+  padding: 8px 14px;
+  border: none;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.delete-btn:hover {
+  background: #d62a2a;
+}

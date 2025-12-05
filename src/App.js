@@ -1,24 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import MovieDetail from "./pages/MovieDetail";
+import Booking from "./pages/Booking";
+import Payment from "./pages/Payment";
+import Confirmation from "./pages/Confirmation";
+import MyBookings from "./pages/MyBookings";
+import Movies from "./pages/Movies";
+import Events from "./pages/Events";
+import Dining from "./pages/Dining";
+import Activities from "./pages/Activities";
+import { Toaster } from "react-hot-toast";
+import Footer from "./components/Footer";
+import ShowTimes from "./pages/ShowTimes";
+import ActivityDetail from "./pages/ActivityDetail";
+
+
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <Router>
+  <Header />
+  <Toaster position="top-center" reverseOrder={false} />
+
+  <div style={{ padding: "0 25px" }}>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/movies" element={<Movies />} />
+      <Route path="/events" element={<Events />} />
+      <Route path="/dining" element={<Dining />} />
+      <Route path="/activity/:id" element={<ActivityDetail />} />
+      <Route path="/showtimes/:id" element={<ShowTimes />} />
+      <Route path="/activities" element={<Activities />} />
+      <Route path="/movie/:id" element={<MovieDetail />} />
+      <Route path="/booking" element={<Booking />} />
+      <Route path="/payment" element={<Payment />} />
+      <Route path="/confirmation" element={<Confirmation />} />
+      <Route path="/my-bookings" element={<MyBookings />} />
+    </Routes>
+  </div>
+
+  <Footer />
+</Router>
+
   );
 }
 
