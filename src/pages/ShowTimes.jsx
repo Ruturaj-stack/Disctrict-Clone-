@@ -1,9 +1,22 @@
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./ShowTimes.css";
+import { Play } from "lucide-react";
 
 const ShowTimes = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+
+  // Handle data from both API (PascalCase) and Dummy Data (camelCase)
+  const movieTitle = state?.Title || state?.title || "Movie Title";
+  const moviePoster = state?.Poster || state?.poster || "";
+  const movieGenre = state?.Genre || (Array.isArray(state?.genre) ? state.genre.join(", ") : state?.genre) || "Genre";
+  const movieDuration = state?.Runtime || state?.duration || "2h 30m";
+  const movieLanguage = state?.Language || state?.language || "English";
+
+  const handlePlayTrailer = () => {
+    window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(movieTitle + " trailer")}`, '_blank');
+  };
 
   const theatres = [
     {
@@ -20,6 +33,8 @@ const ShowTimes = () => {
     },
   ];
 
+  const [selectedDate, setSelectedDate] = useState(0);
+
   const dates = ["4 Thu", "5 Fri", "6 Sat", "7 Sun"];
 
   return (
@@ -28,13 +43,16 @@ const ShowTimes = () => {
       {/* ---- MOVIE HEADER ---- */}
       <div className="movie-header">
         <div className="poster-wrap">
-          <img src={state.Poster} alt="poster" className="poster" />
-          <button className="play-btn">▶</button>
+          <img src={moviePoster} alt="poster" className="poster" />
+          <button className="play-btn" onClick={handlePlayTrailer}>
+            <Play size={20} fill="white" strokeWidth={0} />
+          </button>
         </div>
 
         <div className="movie-info">
-          <h1 className="movie-title">{state.Title}</h1>
-          <p className="movie-meta">UA13+ • Gujarati • 2h 15m</p>
+          <h1 className="movie-title">{movieTitle}</h1>
+          <p className="movie-meta">UA13+ • {movieLanguage} • {movieDuration}</p>
+          <p className="movie-genre" style={{color: '#666', marginTop: '5px'}}>{movieGenre}</p>
           <button className="view-details">View details</button>
         </div>
       </div>
@@ -42,7 +60,11 @@ const ShowTimes = () => {
       {/* ---- DATE SCROLLER ---- */}
       <div className="date-scroll">
         {dates.map((day, i) => (
-          <div key={i} className={`date-card ${i === 0 ? "active" : ""}`}>
+          <div 
+            key={i} 
+            className={`date-card ${selectedDate === i ? "active" : ""}`}
+            onClick={() => setSelectedDate(i)}
+          >
             <span className="month">DEC</span>
             <span className="day">{day.split(" ")[0]}</span>
             <span className="label">{day.split(" ")[1]}</span>
@@ -79,7 +101,15 @@ const ShowTimes = () => {
               <button
                 key={time}
                 className="show-btn"
-                onClick={() => navigate("/booking", { state: { ...state, time } })}
+                onClick={() => navigate("/booking", { 
+                  state: { 
+                    ...state, 
+                    title: movieTitle,
+                    poster: moviePoster,
+                    time,
+                    type: "movie" 
+                  } 
+                })}
               >
                 {time}
               </button>

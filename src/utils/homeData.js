@@ -73,8 +73,8 @@ export const sportsMania = [
 ];
 
 export const artistsInDistrict = [
-  { id: 1, name: "Karan Aujla", image: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&w=400" },
-  { id: 2, name: "Shreya Ghoshal", image: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&w=400" },
-  { id: 3, name: "A. R. Rahman", image: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&w=400" },
-  { id: 4, name: "Sunidhi Chauhan", image: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&w=400" },
+  { id: 1, name: "Karan Aujla", image: "https://images.pexels.com/photos/167636/pexels-photo-167636.jpeg?auto=compress&w=400" },
+  { id: 2, name: "Shreya Ghoshal", image: "https://images.pexels.com/photos/3775131/pexels-photo-3775131.jpeg?auto=compress&w=400" },
+  { id: 3, name: "A. R. Rahman", image: "https://images.pexels.com/photos/811838/pexels-photo-811838.jpeg?auto=compress&w=400" },
+  { id: 4, name: "Sunidhi Chauhan", image: "https://images.pexels.com/photos/210887/pexels-photo-210887.jpeg?auto=compress&w=400" },
 ];

@@ -1,18 +1,24 @@
 .carousel-container {
-  margin-top: 30px;
+  margin-top: 40px;
   width: 100%;
+  position: relative;
+  padding: 0 0 20px 0;
 }
 
 .carousel-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 15px;
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 24px;
+  color: #1c1c1c;
+  letter-spacing: -0.5px;
 }
 
 .carousel-row {
   display: flex;
-  gap: 18px;
+  gap: 24px;
   overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 10px 5px 20px 5px; /* Bottom padding for shadow */
   scrollbar-width: none; /* Firefox */
 }
 
@@ -22,117 +28,132 @@
 
 .movie-card {
   min-width: 200px;
-  cursor: pointer;
-}
-
-.movie-card img {
   width: 200px;
-  height: 290px;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-.movie-title {
-  font-size: 15px;
-  font-weight: 600;
-  margin-top: 8px;
-}
-
-.search-bar {
-  width: 100%;
-  padding: 12px 16px;
-  font-size: 16px;
-  border: 1px solid #e2e2e2;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  outline: none;
-}
-
-.search-bar:focus {
-  border-color: #ff3c3c;
-}
-
-.carousel-container {
-  position: relative;
-  width: 100%;
-  padding: 20px;
-}
-
-.carousel-row {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 15px 0;
-}
-
-.carousel-row::-webkit-scrollbar {
-  display: none;
-}
-
-.movie-card {
-  min-width: 180px;
+  background: transparent;
+  border-radius: 16px;
+  transition: transform .3s cubic-bezier(0.25, 0.8, 0.25, 1);
   cursor: pointer;
-  transition: transform .2s;
+  display: flex;
+  flex-direction: column;
 }
 
 .movie-card:hover {
+  transform: translateY(-8px);
+}
+
+.movie-poster-wrapper {
+  width: 100%;
+  height: 300px;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.movie-card:hover .movie-poster-wrapper {
+  box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+}
+
+.movie-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.movie-card:hover img {
   transform: scale(1.05);
+}
+
+.movie-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.movie-card:hover .movie-overlay {
+  opacity: 1;
+}
+
+.movie-info-body {
+  margin-top: 12px;
+  padding: 0 4px;
+}
+
+.movie-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1c1c1c;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.movie-year {
+  font-size: 14px;
+  color: #666;
 }
 
 .arrow-btn {
   position: absolute;
-  top: 55%;
+  top: 45%; /* Adjusted for larger images */
   transform: translateY(-50%);
   background: white;
-  border: none;
+  border: 1px solid #eee;
   border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  font-size: 20px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
   z-index: 10;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  transition: all 0.3s ease;
+  opacity: 0; /* Hidden by default like SectionCarousel */
 }
 
-.arrow-btn.left {
-  left: 10px;
-}
-
-.arrow-btn.right {
-  right: 10px;
+.carousel-container:hover .arrow-btn {
+  opacity: 1;
 }
 
 .arrow-btn:hover {
-  background: #ff3c3c;
+  background: #ef4f5f;
   color: white;
+  border-color: #ef4f5f;
 }
 
-.movie-card {
-  min-width: 180px;
-  background: white;
-  padding: 10px;
-  border-radius: 14px;
-  transition: transform .25s ease, box-shadow .25s ease;
-  overflow: hidden;
-  cursor: pointer;
+.arrow-btn.left {
+  left: -20px;
 }
 
-.movie-card:hover {
-  transform: scale(1.07);
-  box-shadow: 0px 10px 18px rgba(0,0,0,0.15);
+.arrow-btn.right {
+  right: -20px;
 }
 
-.movie-title {
-  text-align: center;
-  margin-top: 8px;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.movie-card {
-  background: var(--card-bg);
-  color: var(--text-color);
+@media (max-width: 768px) {
+  .arrow-btn {
+    display: none;
+  }
+  
+  .movie-card {
+    min-width: 160px;
+    width: 160px;
+  }
+  
+  .movie-poster-wrapper {
+    height: 240px;
+  }
+  
+  .movie-title {
+    font-size: 16px;
+  }
 }

@@ -1,4 +1,5 @@
 import "./Home.css";
+import HeroBanner from "../components/HeroBanner";
 import MoviesCarousel from "../components/MoviesCarousel";
 import SectionCarousel from "../components/SectionCarousel";
 import ArtistsStrip from "../components/ArtistsStrip";
@@ -11,36 +12,50 @@ import {
   artistsInDistrict,
 } from "../utils/homeData";
 
+import { useNavigate } from "react-router-dom";
+
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="home-page">
-      {/* Hero / top banner – simple for now */}
-      <section className="home-hero">
-        <div className="hero-content">
-          <h1>Discover movies, events & more in your District</h1>
-          <p>Book tickets for movies, concerts, activities and dining experiences.</p>
-        </div>
-      </section>
+      <HeroBanner />
 
-      <div className="home-inner">
+      <div className="home-inner container">
+        <div className="section-header-wrapper" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+             <h2 className="section-title">Recommended Movies</h2>
+             <button className="view-all-btn" onClick={() => navigate('/movies')} style={{ background: 'none', border: 'none', color: '#ef4f5f', cursor: 'pointer', fontSize: '1rem' }}>View All ▸</button>
+        </div>
+        <MoviesCarousel />
+
         <SectionCarousel
           title="Crowd Favourite Activities"
           items={crowdFavouriteActivities}
+          viewAllLink="/activities"
         />
-
-        <h2 className="section-title">Top Hindi movies near you</h2>
-        <MoviesCarousel title="Top Hindi movies near you" query="Hindi" />
 
         <ArtistsStrip
           title="Artists in your District"
           artists={artistsInDistrict}
         />
 
-        <SectionCarousel title="India’s Top Events" items={indiaTopEvents} />
+        <SectionCarousel 
+          title="India’s Top Events" 
+          items={indiaTopEvents} 
+          viewAllLink="/events"
+        />
 
-        <SectionCarousel title="Best in Comedy" items={bestComedy} />
+        <SectionCarousel 
+          title="Best in Comedy" 
+          items={bestComedy} 
+          viewAllLink="/events"
+        />
 
-        <SectionCarousel title="Sports Mania" items={sportsMania} />
+        <SectionCarousel 
+          title="Sports Mania" 
+          items={sportsMania} 
+          viewAllLink="/events"
+        />
       </div>
     </div>
   );

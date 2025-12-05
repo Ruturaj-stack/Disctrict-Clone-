@@ -19,32 +19,35 @@ import ActivityDetail from "./pages/ActivityDetail";
 
 
 
+import { AuthProvider } from "./context/AuthContext";
+import AuthModal from "./components/AuthModal";
+
 function App() {
   return (
-   <Router>
-  <Header />
-  <Toaster position="top-center" reverseOrder={false} />
+    <AuthProvider>
+      <Router>
+        <Header />
+        <AuthModal />
+        <Toaster position="top-center" reverseOrder={false} />
+        
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/dining" element={<Dining />} />
+          <Route path="/activity/:id" element={<ActivityDetail />} />
+          <Route path="/showtimes/:id" element={<ShowTimes />} />
+          <Route path="/activities" element={<Activities />} />
+          <Route path="/movie/:id" element={<MovieDetail />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/confirmation" element={<Confirmation />} />
+          <Route path="/my-bookings" element={<MyBookings />} />
+        </Routes>
 
-  <div style={{ padding: "0 25px" }}>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/movies" element={<Movies />} />
-      <Route path="/events" element={<Events />} />
-      <Route path="/dining" element={<Dining />} />
-      <Route path="/activity/:id" element={<ActivityDetail />} />
-      <Route path="/showtimes/:id" element={<ShowTimes />} />
-      <Route path="/activities" element={<Activities />} />
-      <Route path="/movie/:id" element={<MovieDetail />} />
-      <Route path="/booking" element={<Booking />} />
-      <Route path="/payment" element={<Payment />} />
-      <Route path="/confirmation" element={<Confirmation />} />
-      <Route path="/my-bookings" element={<MyBookings />} />
-    </Routes>
-  </div>
-
-  <Footer />
-</Router>
-
+        <Footer />
+      </Router>
+    </AuthProvider>
   );
 }
 

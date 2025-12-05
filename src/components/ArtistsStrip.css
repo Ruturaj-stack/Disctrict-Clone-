@@ -1,37 +1,51 @@
 .artists-block {
-  margin: 36px 0;
+  margin: 60px 0;
 }
 
 .artists-row {
   display: flex;
-  gap: 16px;
+  gap: 32px;
   overflow-x: auto;
-  padding-bottom: 6px;
+  padding: 10px 0 20px;
+  scrollbar-width: none; /* Firefox */
 }
 
 .artists-row::-webkit-scrollbar {
-  height: 6px;
-}
-
-.artists-row::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 10px;
+  display: none; /* Chrome */
 }
 
 .artist-pill {
   min-width: 120px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.artist-pill:hover {
+  transform: translateY(-8px);
 }
 
 .artist-pill img {
-  width: 68px;
-  height: 68px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 6px;
-  border: 2px solid #ff3c3c;
+  margin-bottom: 14px;
+  border: 3px solid transparent; /* Default border */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: all 0.3s;
+}
+
+.artist-pill:hover img {
+  border-color: #ef4f5f;
+  box-shadow: 0 12px 24px rgba(239, 79, 95, 0.25);
 }
 
 .artist-pill span {
-  font-size: 13px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
 }

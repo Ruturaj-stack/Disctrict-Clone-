@@ -57,3 +57,65 @@ body {
   font-size: 14px;
   opacity: 0.8;
 }
+
+/* Shared Filter Styles */
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 24px 0 32px 0;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  min-width: 70px;
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-btn {
+  padding: 6px 16px;
+  border: 1px solid #eee;
+  background: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.filter-btn.active {
+  background: #ef4f5f;
+  color: white;
+  border-color: #ef4f5f;
+  box-shadow: 0 4px 10px rgba(239, 79, 95, 0.3);
+}
+
+.filter-btn:hover:not(.active) {
+  background: #f5f5f5;
+  border-color: #ccc;
+}
+
+@media (max-width: 768px) {
+  .filter-group {
+    gap: 8px;
+  }
+  
+  .filter-label {
+    min-width: 100%;
+    margin-bottom: 4px;
+  }
+}
