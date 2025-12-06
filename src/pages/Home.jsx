@@ -4,6 +4,7 @@ import MoviesCarousel from "../components/MoviesCarousel";
 import SectionCarousel from "../components/SectionCarousel";
 import ArtistsStrip from "../components/ArtistsStrip";
 
+
 import {
   crowdFavouriteActivities,
   indiaTopEvents,
@@ -34,10 +35,13 @@ const Home = () => {
           viewAllLink="/activities"
         />
 
-        <ArtistsStrip
-          title="Artists in your District"
-          artists={artistsInDistrict}
-        />
+      <div style={{ marginTop: "70px" }}>
+  <ArtistsStrip
+    title="Artists in your District"
+    artists={artistsInDistrict}
+  />
+</div>
+
 
         <SectionCarousel 
           title="India’s Top Events" 

@@ -14,13 +14,11 @@ import { Toaster } from "react-hot-toast";
 import Footer from "./components/Footer";
 import ShowTimes from "./pages/ShowTimes";
 import ActivityDetail from "./pages/ActivityDetail";
-
-
-
-
-
 import { AuthProvider } from "./context/AuthContext";
 import AuthModal from "./components/AuthModal";
+import EventDetail from "./pages/EventDetail";
+
+console.log("EVENTS COMPONENT:", Events);
 
 function App() {
   return (
@@ -36,6 +34,7 @@ function App() {
           <Route path="/events" element={<Events />} />
           <Route path="/dining" element={<Dining />} />
           <Route path="/activity/:id" element={<ActivityDetail />} />
+          <Route path="/event/:id" element={<EventDetail />} />
           <Route path="/showtimes/:id" element={<ShowTimes />} />
           <Route path="/activities" element={<Activities />} />
           <Route path="/movie/:id" element={<MovieDetail />} />

@@ -1,8 +1,8 @@
 export const movies = [
   {
     id: 1,
-    title: "The Marvels",
-    poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/the-marvels-et00310793-1698313204.jpg",
+    title: "Zootopia 2",
+    poster: "https://cdn.district.in/movies-assets/images/cinema/Zootopia-2--9aa43c80-c91b-11f0-93e8-ff3c1daa03c7.jpg",
     genre: ["Action", "Adventure", "Fantasy"],
     language: "English",
     rating: 7.5,
@@ -12,7 +12,7 @@ export const movies = [
   {
     id: 2,
     title: "Avatar: The Way of Water",
-    poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/avatar-the-way-of-water-et00037264-1670850724.jpg",
+    poster: "https://cdn.district.in/movies-assets/images/cinema/Avatar_Poster-7651a660-cecf-11f0-844e-8ff5d2c2eb90.jpg",
     genre: ["Action", "Adventure", "Sci-Fi"],
     language: "English",
     rating: 8.9,
@@ -31,8 +31,8 @@ export const movies = [
   },
   {
     id: 4,
-    title: "Animal",
-    poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/animal-et00311763-1701354388.jpg",
+    title: "Sinchan The Movie: Shoshin",
+    poster: "https://cdn.district.in/movies-assets/images/cinema/Shin-chan--The-Spicy-Kasukabe-Dancers-in-India-83abc550-9aa1-11f0-95a0-71e5f4337a1e.jpg",
     genre: ["Action", "Drama", "Crime"],
     language: "Hindi",
     rating: 8.0,
@@ -41,8 +41,8 @@ export const movies = [
   },
   {
     id: 5,
-    title: "Tiger 3",
-    poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/tiger-3-et00313411-1698731777.jpg",
+    title: "Rowing the gold ",
+    poster: "https://cdn.district.in/movies-assets/images/cinema/portrait%20(18)-1c46fce0-d02f-11f0-b419-ab5f5e8f8fda.jpg",
     genre: ["Action", "Thriller"],
     language: "Hindi",
     rating: 7.2,
@@ -51,8 +51,8 @@ export const movies = [
   },
   {
     id: 6,
-    title: "Sam Bahadur",
-    poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/sam-bahadur-et00309257-1701069502.jpg",
+    title: "Gem",
+    poster: "https://cdn.district.in/movies-assets/images/cinema/portrait%20(17)-a47445e0-d02b-11f0-a3f2-691f9f083e23.jpg",
     genre: ["Biography", "Drama", "War"],
     language: "Hindi",
     rating: 9.1,
@@ -65,7 +65,7 @@ export const dining = [
   {
     id: 1,
     name: "Bastian",
-    image: "https://b.zmtcdn.com/data/pictures/2/18622152/c9a419c8c7380155b95420952d79389d.jpg",
+    image: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHJlc3RhdXJhbnR8ZW58MHx8MHx8fDA%3D",
     location: "Bandra West, Mumbai",
     rating: 4.5,
     cuisine: "Seafood, Continental",
@@ -74,7 +74,7 @@ export const dining = [
   {
     id: 2,
     name: "O Pedro",
-    image: "https://b.zmtcdn.com/data/pictures/0/18587350/22879555230985536468600762923506.jpg",
+    image: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHJlc3RhdXJhbnR8ZW58MHx8MHx8fDA%3D",
     location: "BKC, Mumbai",
     rating: 4.8,
     cuisine: "Goan, Portuguese",
@@ -83,7 +83,7 @@ export const dining = [
   {
     id: 3,
     name: "Masque",
-    image: "https://b.zmtcdn.com/data/pictures/chains/4/18392724/d8166668e16943891d4400c4c418c30c.jpg",
+    image: "https://images.unsplash.com/photo-1579027989536-b7b1f875659b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fHJlc3RhdXJhbnR8ZW58MHx8MHx8fDA%3D",
     location: "Mahalakshmi, Mumbai",
     rating: 4.7,
     cuisine: "Modern Indian",
@@ -92,7 +92,7 @@ export const dining = [
   {
     id: 4,
     name: "Bombay Canteen",
-    image: "https://b.zmtcdn.com/data/pictures/5/17806995/10e01720d203551532052445037d6529.jpg",
+    image: "https://plus.unsplash.com/premium_photo-1670984940113-f3aa1cd1309a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fHJlc3RhdXJhbnR8ZW58MHx8MHx8fDA%3D",
     location: "Lower Parel, Mumbai",
     rating: 4.6,
     cuisine: "Modern Indian",
@@ -104,7 +104,7 @@ export const events = [
   {
     id: 1,
     title: "Arijit Singh Live",
-    image: "https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U3VuLCAxNyBEZWM%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00366681-jmwydgukwx-portrait.jpg",
+    image: "https://media.insider.in/image/upload/c_crop,g_custom/v1759754519/efeydguqcmyu5pz7hw1e.jpg",
     date: "Sun, 17 Dec",
     location: "Jio World Garden, Mumbai",
     price: "₹1,500 onwards",
@@ -113,7 +113,7 @@ export const events = [
   {
     id: 2,
     title: "Zomaland 2024",
-    image: "https://b.zmtcdn.com/data/o2_assets/311a24d0891d06e23b207d5716182c421634732152.png",
+    image: "https://media.insider.in/image/upload/c_crop,g_custom/v1761735174/bixontp1qxte8siozpnb.png",
     date: "Sat, 10 Feb",
     location: "MMRDA Grounds, Mumbai",
     price: "₹699 onwards",
@@ -122,7 +122,7 @@ export const events = [
   {
     id: 3,
     title: "Vir Das: Mind Fool",
-    image: "https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U2F0LCA2IEphbg%3D%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00374665-zlwvpxyjma-portrait.jpg",
+    image: "https://media.insider.in/image/upload/c_crop,g_custom/v1759737780/an5jumrczqh9xkyyrahj.jpg",
     date: "Sat, 6 Jan",
     location: "Dome, NSCI, Mumbai",
     price: "₹999 onwards",
@@ -133,16 +133,16 @@ export const events = [
 export const activities = [
   {
     id: 1,
-    title: "Pottery Workshop",
-    image: "https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U3VuLCAxNyBEZWM%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00348255-yqgqjydjzx-portrait.jpg",
+    title: "F9 Go Karting",
+    image: "https://media.insider.in/image/upload/c_crop,g_custom/v1763548196/eignm2zrx0vkrhhdccsg.png",
     location: "The Tiny Clay Inn",
     price: "₹1,200",
     rating: 4.8
   },
   {
     id: 2,
-    title: "Paint & Sip",
-    image: "https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U2F0LCAxNiBEZWM%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00376884-jwyzwyqjzm-portrait.jpg",
+    title: "Resin Beach Art",
+    image: "https://media.insider.in/image/upload/c_crop,g_custom/v1760567442/aqiisqodi8ikxc7kmfjw.jpg",
     location: "Doolally Taproom",
     price: "₹1,500",
     rating: 4.7

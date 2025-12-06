@@ -3,120 +3,226 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./ShowTimes.css";
 import { Play } from "lucide-react";
 
+// BRAND LOGOS (put files in src/assets/)
+import cinepolisLogo from "../assets/cinepolis.png";
+import inoxLogo from "../assets/inox.png";
+
 const ShowTimes = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  // Handle data from both API (PascalCase) and Dummy Data (camelCase)
-  const movieTitle = state?.Title || state?.title || "Movie Title";
-  const moviePoster = state?.Poster || state?.poster || "";
-  const movieGenre = state?.Genre || (Array.isArray(state?.genre) ? state.genre.join(", ") : state?.genre) || "Genre";
-  const movieDuration = state?.Runtime || state?.duration || "2h 30m";
-  const movieLanguage = state?.Language || state?.language || "English";
+  // Handle API + dummy structures
+  const movieTitle =
+    state?.Title || state?.title || "Movie Title";
+  const moviePoster =
+    state?.Poster || state?.poster || "";
+  const movieGenre =
+    state?.Genre ||
+    (Array.isArray(state?.genre)
+      ? state.genre.join(", ")
+      : state?.genre) ||
+    "Drama";
+  const movieDuration =
+    state?.Runtime || state?.duration || "2h 49m";
+  const movieLanguage =
+    state?.Language || state?.language || "Hindi";
+  const movieCert = state?.Rated || "UA16+";
 
   const handlePlayTrailer = () => {
-    window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(movieTitle + " trailer")}`, '_blank');
+    window.open(
+      `https://www.youtube.com/results?search_query=${encodeURIComponent(
+        movieTitle + " trailer"
+      )}`,
+      "_blank"
+    );
   };
 
+  // Fake theatre data for layout
   const theatres = [
     {
-      name: "Metro INOX Cinema, M.G. Road, Mumbai",
-      distance: "6.3 km away",
-      cancellation: true,
-      shows: ["04:50 PM", "07:40 PM", "10:10 PM"],
+      id: 1,
+      logo: cinepolisLogo,
+      name: "Cinepolis Grand View High Street, Gurugram",
+      distance: "1.6 km away",
+      note: "Non-cancellable",
+      cancellable: false,
+      shows: ["07:30 PM", "11:05 PM"],
     },
     {
-      name: "PVR ICON, Andheri West",
-      distance: "10.2 km away",
-      cancellation: false,
-      shows: ["03:15 PM", "06:20 PM", "09:00 PM"],
+      id: 2,
+      logo: inoxLogo,
+      name: "INOX World Mark, Sector 65, Gurugram",
+      distance: "4.4 km away",
+      note: "Allows cancellation",
+      cancellable: true,
+      shows: ["04:35 PM", "07:50 PM", "11:20 PM"],
     },
   ];
 
   const [selectedDate, setSelectedDate] = useState(0);
 
-  const dates = ["4 Thu", "5 Fri", "6 Sat", "7 Sun"];
+  // Mimic BMS strip (you can tweak labels)
+  const dates = [
+    { day: "6", label: "Sat" },
+    { day: "7", label: "Sun" },
+    { day: "8", label: "Mon" },
+    { day: "9", label: "Tue" },
+    { day: "10", label: "Wed" },
+    { day: "11", label: "Thu" },
+  ];
+
+  const handleShowClick = (time, theatreName) => {
+    navigate("/booking", {
+      state: {
+        ...state,
+        title: movieTitle,
+        poster: moviePoster,
+        time,
+        theatre: theatreName,
+        type: "movie",
+      },
+    });
+  };
 
   return (
-    <div className="showtimes-page">
+    <div className="st-wrapper">
+      <div className="st-inner">
 
-      {/* ---- MOVIE HEADER ---- */}
-      <div className="movie-header">
-        <div className="poster-wrap">
-          <img src={moviePoster} alt="poster" className="poster" />
-          <button className="play-btn" onClick={handlePlayTrailer}>
-            <Play size={20} fill="white" strokeWidth={0} />
-          </button>
-        </div>
-
-        <div className="movie-info">
-          <h1 className="movie-title">{movieTitle}</h1>
-          <p className="movie-meta">UA13+ • {movieLanguage} • {movieDuration}</p>
-          <p className="movie-genre" style={{color: '#666', marginTop: '5px'}}>{movieGenre}</p>
-          <button className="view-details">View details</button>
-        </div>
-      </div>
-
-      {/* ---- DATE SCROLLER ---- */}
-      <div className="date-scroll">
-        {dates.map((day, i) => (
-          <div 
-            key={i} 
-            className={`date-card ${selectedDate === i ? "active" : ""}`}
-            onClick={() => setSelectedDate(i)}
-          >
-            <span className="month">DEC</span>
-            <span className="day">{day.split(" ")[0]}</span>
-            <span className="label">{day.split(" ")[1]}</span>
+        {/* ------- MOVIE STRIP -------- */}
+        <div className="st-movie-strip">
+          <div className="st-poster-card">
+            {moviePoster && (
+              <img
+                src={moviePoster}
+                alt={movieTitle}
+                className="st-poster-img"
+              />
+            )}
+            <button
+              className="st-play-btn"
+              onClick={handlePlayTrailer}
+            >
+              <Play size={18} fill="#fff" strokeWidth={0} />
+            </button>
           </div>
-        ))}
-      </div>
 
-      {/* ---- FILTER ROW ---- */}
-      <div className="filters-row">
-        <button className="filter">Filters ▾</button>
-        <button className="filter">After 5 PM</button>
-        <button className="filter">Wheelchair Friendly</button>
-        <button className="filter">Recliners</button>
-        <button className="filter">Premium Seats</button>
-      </div>
+          <div className="st-movie-details">
+            <h1 className="st-movie-title">{movieTitle}</h1>
+            <p className="st-movie-meta">
+              {movieCert} • {movieLanguage} • {movieDuration}
+            </p>
+            <p className="st-movie-genre">{movieGenre}</p>
+            <button className="st-view-details-btn">
+              View details
+            </button>
+          </div>
+        </div>
 
-      {/* ---- LEGEND ---- */}
-      <div className="legend-row">
-        <span className="dot green"></span> Available
-        <span className="dot yellow"></span> Filling fast
-        <span className="dot red"></span> Almost full
-      </div>
+        {/* ------- DATE STRIP -------- */}
+        <div className="st-date-strip">
+          <div className="st-month-column">
+            <span className="st-month-text">DEC</span>
+          </div>
 
-      {/* ---- THEATRES ---- */}
-      {theatres.map((t, index) => (
-        <div key={index} className="theatre-card">
-          <h3>{t.name}</h3>
-          <p className="theatre-meta">
-            {t.distance} {t.cancellation && "| Allows cancellation"}
-          </p>
-
-          <div className="show-buttons">
-            {t.shows.map((time) => (
+          <div className="st-date-scroll">
+            {dates.map((item, index) => (
               <button
-                key={time}
-                className="show-btn"
-                onClick={() => navigate("/booking", { 
-                  state: { 
-                    ...state, 
-                    title: movieTitle,
-                    poster: moviePoster,
-                    time,
-                    type: "movie" 
-                  } 
-                })}
+                key={item.day + item.label}
+                className={
+                  "st-date-pill" +
+                  (index === selectedDate ? " active" : "")
+                }
+                onClick={() => setSelectedDate(index)}
               >
-                {time}
+                <span className="st-date-day">{item.day}</span>
+                <span className="st-date-label">{item.label}</span>
               </button>
             ))}
           </div>
         </div>
-      ))}
+
+        {/* ------- FILTER ROW -------- */}
+        <div className="st-filters-row">
+          <button className="st-filter-btn">
+            Filters ▾
+          </button>
+          <button className="st-filter-btn">
+            After 5 PM
+          </button>
+          <button className="st-filter-btn">
+            Wheelchair Friendly
+          </button>
+          <button className="st-filter-btn">
+            Recliners
+          </button>
+          <button className="st-filter-btn">
+            Premium Seats
+          </button>
+        </div>
+
+        {/* ------- LEGEND BAR -------- */}
+        <div className="st-legend-bar">
+          <div className="st-legend-item">
+            <span className="st-dot st-dot-green" /> Available
+          </div>
+          <div className="st-legend-item">
+            <span className="st-dot st-dot-yellow" /> Filling fast
+          </div>
+          <div className="st-legend-item">
+            <span className="st-dot st-dot-red" /> Almost full
+          </div>
+        </div>
+
+        {/* ------- THEATRE CARDS -------- */}
+        <div className="st-theatres-list">
+          {theatres.map((t) => (
+            <div key={t.id} className="st-theatre-card">
+              <div className="st-theatre-header">
+                <div className="st-theatre-left">
+                  <img
+                    src={t.logo}
+                    alt={t.name}
+                    className="st-theatre-logo"
+                  />
+                  <div>
+                    <h3 className="st-theatre-name">
+                      {t.name}
+                    </h3>
+                    <p className="st-theatre-meta">
+                      {t.distance}{" "}
+                      <span className="st-theatre-note">
+                        • {t.note}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+
+                <button className="st-like-btn" aria-label="like">
+                  ♡
+                </button>
+              </div>
+
+              <div className="st-showtime-row">
+                {t.shows.map((time) => (
+                  <button
+                    key={time}
+                    className="st-showtime-btn"
+                    onClick={() =>
+                      handleShowClick(time, t.name)
+                    }
+                  >
+                    <span className="st-showtime-time">
+                      {time}
+                    </span>
+                    <span className="st-showtime-tag">LASER</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
     </div>
   );
 };

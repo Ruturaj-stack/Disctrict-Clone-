@@ -8,7 +8,7 @@ const ArtistsStrip = ({ title, artists }) => {
       </div>
 
       <div className="artists-row">
-        {artists.map((artist) => (
+        {artists && artists.map((artist) => (
           <div key={artist.id} className="artist-pill">
             <img src={artist.image} alt={artist.name} />
             <span>{artist.name}</span>

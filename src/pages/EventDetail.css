@@ -1,0 +1,93 @@
+.event-detail-outer {
+  background: #faf9f4;
+  padding: 40px 0 120px;
+  width: 100%;
+}
+
+.event-detail-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px;
+  width: 95%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.event-detail-image img {
+  width: 980px;
+  height: 580px;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+.event-detail-card {
+  width: 430px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  padding: 32px;
+  border-radius: 18px;
+  box-shadow: 0px 6px 18px rgba(0,0,0,0.06);
+}
+
+.event-detail-title {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 22px;
+}
+
+.event-detail-line {
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  color: #3a3a3a;
+}
+
+.label {
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 18px;
+  color: #777;
+}
+
+.price {
+  font-size: 22px;
+  font-weight: 800;
+  margin-top: 5px;
+}
+
+.event-detail-book-btn {
+  width: 100%;
+  padding: 15px 0;
+  background: black;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 12px;
+  margin-top: 16px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.event-detail-book-btn:hover {
+  opacity: .85;
+}
+
+.event-detail-about {
+  max-width: 1200px;
+  margin: 100px auto 0;
+}
+
+.event-detail-about h2 {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+.event-detail-about p {
+  font-size: 18px;
+  line-height: 1.65;
+  color: #444;
+}
