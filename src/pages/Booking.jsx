@@ -5,23 +5,61 @@ import { useState, useEffect } from "react";
 import { getBookings } from "../utils/storage";
 import toast from "react-hot-toast";
 
+import LoginModal from "../components/LoginModal";
+import OTPModal from "../components/OTPModal";
+
 const Booking = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  // ================= HOOKS ALWAYS FIRST =================
+  // ===== HOOKS =====
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [bookedSeats, setBookedSeats] = useState([]);
+  const [ticketCount, ] = useState(1);
 
-  const [guests, setGuests] = useState(2);
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [ticketCount, setTicketCount] = useState(1);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showOtp, setShowOtp] = useState(false);
 
-  // ================= COMMON =================
+  const [phone, setPhone] = useState("");
+  const [generatedOtp, setGeneratedOtp] = useState("");
+
   const type = state?.type || "movie";
 
-  // ----- MOVIE SEAT LAYOUT -----
+  // ===== LOGIN HANDLERS =====
+  const handleLoginSuccess = (enteredPhone, otp) => {
+    setPhone(enteredPhone);
+    setGeneratedOtp(otp);
+
+    setShowLogin(false);
+    setTimeout(() => setShowOtp(true), 300);
+  };
+
+  const handleOtpVerify = () => {
+    setShowOtp(false);
+
+    // redirect after OTP success
+    if (type === "movie") {
+      navigate("/payment", {
+        state: {
+          ...state,
+          type: "movie",
+          seats: selectedSeats,
+          amount: movieTotalAmount,
+        },
+      });
+    } else {
+      navigate("/payment", {
+        state: {
+          ...state,
+          type,
+          amount: eventPrice * ticketCount,
+          tickets: ticketCount,
+        },
+      });
+    }
+  };
+
+  // ================= MOVIE CONFIG =================
   const executiveRows = ["D", "C", "B"];
   const executiveSeatsPerRow = 15;
 
@@ -40,43 +78,35 @@ const Booking = () => {
   const EXEC_PRICE = 320;
   const NORMAL_PRICE = 300;
 
+  // LOAD RESERVED SEATS
   useEffect(() => {
     if (type === "movie") {
       const allBookings = getBookings();
-      const sameMovieBookings = allBookings.filter((b) => b.title === movieTitle);
-      const reserved = sameMovieBookings.flatMap((b) => b.seats || []);
+      const reserved = allBookings
+        .filter((b) => b.title === movieTitle)
+        .flatMap((b) => b.seats || []);
+
       setBookedSeats(reserved);
     }
   }, [type, movieTitle]);
 
-  // ================= INVALID REQUEST =================
   if (!state) {
-    return (
-      <div className="booking-empty-page">
-        <h2>Invalid Booking Request</h2>
-      </div>
-    );
+    return <h2>Invalid Booking Request</h2>;
   }
 
-  // ================= MOVIE ACTIONS =================
+  // ===== SEAT HANDLING =====
   const toggleSeat = (seatId) => {
-    if (bookedSeats.includes(seatId)) {
-      toast.error("This seat is already booked ❌");
-      return;
-    }
+    if (bookedSeats.includes(seatId)) return toast.error("Seat already booked");
 
     setSelectedSeats((prev) =>
       prev.includes(seatId)
         ? prev.filter((s) => s !== seatId)
-        : prev.length >= 10
-        ? (toast.error("You can only book up to 10 seats"), prev)
         : [...prev, seatId]
     );
   };
 
   const calcSeatPrice = (seatId) => {
-    const row = seatId.charAt(0);
-    return executiveRows.includes(row) ? EXEC_PRICE : NORMAL_PRICE;
+    return executiveRows.includes(seatId[0]) ? EXEC_PRICE : NORMAL_PRICE;
   };
 
   const movieTotalAmount = selectedSeats.reduce(
@@ -85,231 +115,177 @@ const Booking = () => {
   );
 
   const handleMovieNext = () => {
-    if (selectedSeats.length === 0) {
-      toast.error("Please select at least one seat");
-      return;
-    }
-
-    navigate("/payment", {
-      state: {
-        ...state,
-        type: "movie",
-        title: movieTitle,
-        seats: selectedSeats,
-        amount: movieTotalAmount,
-        time: selectedTime,
-        date: showDate,
-        theatre,
-      },
-    });
+    if (selectedSeats.length === 0) return toast.error("Please select seats first");
+    setShowLogin(true);
   };
 
-  // ================= EVENT / ACTIVITY =================
-  const parsePrice = (priceStr) => {
-    if (!priceStr) return 0;
-    if (typeof priceStr === "number") return priceStr;
-    const num = priceStr.replace(/[^0-9]/g, "");
-    return parseInt(num, 10) || 0;
-  };
+  const parsePrice = (priceStr) =>
+    parseInt((priceStr || "0").replace(/[^0-9]/g, ""), 10);
 
   const eventPrice = parsePrice(state?.price);
 
-  const handleNonMovieNext = () => {
-    navigate("/payment", {
-      state: {
-        ...state,
-        tickets: ticketCount,
-        amount: eventPrice * ticketCount,
-        type,
-      },
-    });
-  };
+  const handleNonMovieNext = () => setShowLogin(true);
 
-  // ================= MOVIE LAYOUT =================
-  if (type === "movie") {
-    return (
-      <div className="movie-booking-page">
-        <div className="movie-booking-inner">
-          <div className="movie-booking-header">
-            <div>
+  // ========== UI ==========
+
+  return (
+    <>
+      {type === "movie" ? (
+        <div className="movie-booking-page">
+          <div className="movie-booking-inner">
+
+            <div className="movie-booking-header">
               <h1 className="mb-title">{movieTitle}</h1>
               <p className="mb-sub">
                 {showDate}, {selectedTime} at {theatre}
               </p>
             </div>
-          </div>
 
-          <div className="mb-top-row">
-            <div className="mb-date-block">
-              <span className="mb-day">{showWeekday}</span>
-              <span className="mb-date">{showDate}</span>
+            <div className="mb-top-row">
+              <div className="mb-date-block">
+                <span className="mb-day">{showWeekday}</span>
+                <span className="mb-date">{showDate}</span>
+              </div>
+
+              <div className="mb-time-chips">
+                {baseTimes.map((t) => (
+                  <button
+                    key={t}
+                    className={`mb-time-chip ${selectedTime === t ? "active" : ""}`}
+                    onClick={() => setSelectedTime(t)}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="mb-time-chips">
-              {baseTimes.map((t) => (
-                <button
-                  key={t}
-                  className={`mb-time-chip ${selectedTime === t ? "active" : ""}`}
-                  onClick={() => setSelectedTime(t)}
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
-          </div>
+            {/* seat layout */}
+            <div className="mb-seat-wrapper">
+              <div className="mb-row-labels"><span>D</span><span>C</span><span>B</span><span>A</span></div>
 
-          <div className="mb-seat-wrapper">
-            <div className="mb-row-labels">
-              <span>D</span>
-              <span>C</span>
-              <span>B</span>
-              <span>A</span>
-            </div>
+              <div className="mb-seat-main">
+                <p className="mb-section-title">EXECUTIVE : ₹320</p>
 
-            <div className="mb-seat-main">
-              <p className="mb-section-title">EXECUTIVE : ₹320</p>
-
-              {executiveRows.map((row) => (
-                <div key={row} className="mb-seat-row">
-                  <div className="mb-seat-row-inner">
-                    {Array.from({ length: executiveSeatsPerRow }, (_, i) => {
-                      const num = i + 1;
-                      const seatId = `${row}${num}`;
-                      const isBooked = bookedSeats.includes(seatId);
-                      const isSelected = selectedSeats.includes(seatId);
-
-                      return (
-                        <button
-                          key={seatId}
-                          className={`mb-seat-chip ${isBooked ? "booked" : ""} ${
-                            isSelected ? "selected" : ""
-                          }`}
-                          onClick={() => toggleSeat(seatId)}
-                          disabled={isBooked}
-                        >
-                          {num}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
-
-              <p className="mb-section-title normal">NORMAL : ₹300</p>
-
-              {Object.entries(normalLayout).map(([row, layout]) => (
-                <div key={row} className="mb-seat-row">
-                  <div className="mb-seat-row-inner">
-                    {layout.map((val, idx) => {
-                      if (val === "wc") {
+                {executiveRows.map((row) => (
+                  <div key={row} className="mb-seat-row">
+                    <div className="mb-seat-row-inner">
+                      {Array.from({ length: executiveSeatsPerRow }, (_, i) => {
+                        const num = i + 1;
+                        const seatId = `${row}${num}`;
                         return (
-                          <div key={`${row}-wc-${idx}`} className="mb-seat-chip wc">
-                            ♿
-                          </div>
+                          <button
+                            key={seatId}
+                            className={`mb-seat-chip ${
+                              bookedSeats.includes(seatId) ? "booked" : ""
+                            } ${selectedSeats.includes(seatId) ? "selected" : ""}`}
+                            onClick={() => toggleSeat(seatId)}
+                            disabled={bookedSeats.includes(seatId)}
+                          >
+                            {num}
+                          </button>
                         );
-                      }
-
-                      const seatId = `${row}${val}`;
-                      const isBooked = bookedSeats.includes(seatId);
-                      const isSelected = selectedSeats.includes(seatId);
-
-                      return (
-                        <button
-                          key={seatId}
-                          className={`mb-seat-chip ${isBooked ? "booked" : ""} ${
-                            isSelected ? "selected" : ""
-                          }`}
-                          onClick={() => toggleSeat(seatId)}
-                          disabled={isBooked}
-                        >
-                          {val}
-                        </button>
-                      );
-                    })}
+                      })}
+                    </div>
                   </div>
+                ))}
+
+                <p className="mb-section-title normal">NORMAL : ₹300</p>
+
+                {Object.entries(normalLayout).map(([row, layout]) => (
+                  <div key={row} className="mb-seat-row">
+                    <div className="mb-seat-row-inner">
+                      {layout.map((val, idx) =>
+                        val === "wc" ? (
+                          <div key={idx} className="mb-seat-chip wc">♿</div>
+                        ) : (
+                          <button
+                            key={`${row}${val}`}
+                            className={`mb-seat-chip ${
+                              bookedSeats.includes(`${row}${val}`) ? "booked" : ""
+                            } ${
+                              selectedSeats.includes(`${row}${val}`) ? "selected" : ""
+                            }`}
+                            onClick={() => toggleSeat(`${row}${val}`)}
+                            disabled={bookedSeats.includes(`${row}${val}`)}
+                          >
+                            {val}
+                          </button>
+                        )
+                      )}
+                    </div>
+                  </div>
+                ))}
+
+                <div className="mb-screen-wrap"><div className="mb-screen-curve" /></div>
+              </div>
+            </div>
+          </div>
+
+          {selectedSeats.length > 0 && (
+            <div className="mb-summary-bar">
+              <div className="mb-summary-left">
+                <div className="mb-summary-title">
+                  {selectedSeats.length} Tickets • {selectedSeats.join(", ")}
                 </div>
-              ))}
-
-              <div className="mb-screen-wrap">
-                <div className="mb-screen-curve" />
+                <div className="mb-summary-sub">
+                  {movieTitle} • {showDate}, {selectedTime}
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div className="mb-legend-bar">
-            <div className="mb-legend-item">
-              <span className="mb-legend-dot available" /> Available
+              <button className="mb-pay-btn" onClick={handleMovieNext}>
+                Pay ₹{movieTotalAmount}
+              </button>
             </div>
-            <div className="mb-legend-item">
-              <span className="mb-legend-dot occupied" /> Occupied
-            </div>
-            <div className="mb-legend-item">
-              <span className="mb-legend-dot selected" /> Selected
-            </div>
-          </div>
+          )}
         </div>
+      ) : (
+        // EVENTS / SPORTS BOOKING VIEW
+        <div className="event-booking-outer">
+          <div className="event-booking-layout">
+            <div className="event-booking-banner"><img src={state.image} alt={state.title} /></div>
 
-        {selectedSeats.length > 0 && (
-          <div className="mb-summary-bar">
-            <div className="mb-summary-left">
-              <div className="mb-summary-title">
-                {selectedSeats.length} Tickets • {selectedSeats.join(", ")}
+            <div className="event-booking-card">
+              <h1 className="eb-title">{state.title}</h1>
+              <div className="eb-line">🏷 {state.category}</div>
+              <div className="eb-line">🕒 Daily, 6:00 PM onwards</div>
+              <div className="eb-line">📍 {state.location}</div>
+
+              <div className="eb-price-block">
+                <p className="label">Starts from</p>
+                <p className="price">{state.price}</p>
               </div>
-              <div className="mb-summary-sub">
-                {movieTitle} • {showDate}, {selectedTime}
-              </div>
+
+              <button className="eb-book-btn" onClick={handleNonMovieNext}>
+                BOOK TICKETS
+              </button>
             </div>
-
-            <button className="mb-pay-btn" onClick={handleMovieNext}>
-              Pay ₹{movieTotalAmount}
-            </button>
           </div>
-        )}
-      </div>
-    );
-  }
 
-  // ============= EVENT / ACTIVITIES / SPORTS (DISTRICT STYLE) =============
-  return (
-    <div className="event-booking-outer">
-      <div className="event-booking-layout">
-        <div className="event-booking-banner">
-          <img src={state.image} alt={state.title} />
+          <section className="event-about-sec">
+            <h2>About the Event</h2>
+            <p>Experience vibrant activities, events, food and more.</p>
+          </section>
         </div>
+      )}
 
-        <div className="event-booking-card">
-          <h1 className="eb-title">{state.title}</h1>
+      {/* MODALS */}
+      {showLogin && (
+        <LoginModal
+          onClose={() => setShowLogin(false)}
+          onSuccess={(number, otp) => handleLoginSuccess(number, otp)}
+        />
+      )}
 
-          <div className="eb-line">
-            <span>🏷</span> {state.category || "Activities & Experiences"}
-          </div>
-
-          <div className="eb-line">
-            <span>🕒</span> Daily, 6:00 PM onwards
-          </div>
-
-          <div className="eb-line">
-            <span>📍</span> {state.location}
-          </div>
-
-          <div className="eb-price-block">
-            <p className="label">Starts from</p>
-            <p className="price">{state.price}</p>
-          </div>
-
-          <button className="eb-book-btn" onClick={handleNonMovieNext}>
-            BOOK TICKETS
-          </button>
-        </div>
-      </div>
-
-      <section className="event-about-sec">
-        <h2>About the Event</h2>
-        <p>
-          Enjoy vibrant performances, activities, food, experiences and much more!
-        </p>
-      </section>
-    </div>
+      {showOtp && (
+        <OTPModal
+          phone={phone}
+          generatedOtp={generatedOtp}
+          onClose={() => setShowOtp(false)}
+          onVerify={handleOtpVerify}
+        />
+      )}
+    </>
   );
 };
 
