@@ -32,7 +32,7 @@ const OTPModal = ({ onClose, onVerify, phone }) => {
           Verify & Continue
         </button>
 
-        <p className="otp-resend">Didn’t receive code? <span>Resend</span></p>
+        <p className="otp-resend">Didn’t receive code? <span>Resend And Check Console Usme Mil Jayega OTP</span></p>
       </div>
     </div>
   );
