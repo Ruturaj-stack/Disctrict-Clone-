@@ -10,7 +10,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  font-family: "Inter", sans-serif;
+  font-family: "Okra", "Metropolis", "Inter", sans-serif;
 }
 
 /* LEFT SECTION */
@@ -93,7 +93,7 @@
 }
 
 .logo.bigger {
-  height: 100px;     /* increased from 54px */
+  height: 42px;
   width: auto;
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -106,13 +106,13 @@
 /* Responsive scaling */
 @media (max-width: 1024px) {
   .logo.bigger {
-    height: 100px;
+    height: 42px;
   }
 }
 
 @media (max-width: 768px) {
   .logo.bigger {
-    height: 48px;
+    height: 40px;
   }
 }
 

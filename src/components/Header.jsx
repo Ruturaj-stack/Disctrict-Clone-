@@ -5,15 +5,20 @@ import { Search, MapPin, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import ProfilePanel from "./ProfilePanel";
+import LoginModal from "./LoginModal";
+import OTPModal from "./OTPModal";
 
 const Header = () => {
   const navigate = useNavigate();
   const locationPath = useLocation();
-  const { isLoggedIn, userPhone, userName, openAuthModal } = useAuth();
+  const { isLoggedIn, userPhone, userName, login } = useAuth();
 
   const [isLocOpen, setIsLocOpen] = useState(false);
   const [currentCity, setCurrentCity] = useState("Gurugram");
   const [showProfile, setShowProfile] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showOtp, setShowOtp] = useState(false);
+  const [pendingPhone, setPendingPhone] = useState("");
 
 
   const cities = [
@@ -55,10 +60,23 @@ const Header = () => {
   // 👤 Profile
   const handleProfileClick = () => {
     if (!isLoggedIn) {
-      openAuthModal();
+      setShowLogin(true);
     } else {
       setShowProfile(true);
     }
+  };
+
+  const handleLoginSuccess = (enteredPhone, otp) => {
+    setPendingPhone(enteredPhone);
+    setShowLogin(false);
+    setTimeout(() => setShowOtp(true), 250);
+  };
+
+  const handleOtpVerify = () => {
+    setShowOtp(false);
+    login(pendingPhone);
+    setPendingPhone("");
+    setShowProfile(true);
   };
 
   const profileInitial = (userName || userPhone || "U").charAt(0).toUpperCase();
@@ -150,6 +168,22 @@ const Header = () => {
           )}
         </div>
       </header>
+
+      {/* Modals */}
+      {showLogin && (
+        <LoginModal
+          onClose={() => setShowLogin(false)}
+          onSuccess={(number) => handleLoginSuccess(number)}
+        />
+      )}
+
+      {showOtp && (
+        <OTPModal
+          phone={pendingPhone}
+          onClose={() => setShowOtp(false)}
+          onVerify={handleOtpVerify}
+        />
+      )}
 
       {/* Profile Drawer */}
       <ProfilePanel open={showProfile} onClose={() => setShowProfile(false)} />

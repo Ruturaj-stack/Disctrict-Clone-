@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { movies } from "../utils/dummyData";
+import { fetchMoviesBatch } from "../utils/api";
 import "./Movies.css";
 import { ChevronDown, Star } from "lucide-react";
 
@@ -27,11 +27,32 @@ const Movies = () => {
     }
   }, [locationObj.search]);
 
-  const filteredMovies = movies.filter(movie => {
-    const langMatch = selectedLanguage === "All" || movie.language === selectedLanguage;
-    const genreMatch = selectedGenre === "All" || movie.genre.includes(selectedGenre);
+  const [apiMovies, setApiMovies] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    async function load() {
+      const data = searchQuery
+        ? await fetchMoviesBatch(200, [searchQuery])
+        : await fetchMoviesBatch(300);
+      // Map OMDb search results to grid-friendly structure
+      const mapped = data.map((m) => ({
+        id: m.imdbID,
+        title: m.Title,
+        poster: m.Poster,
+        genre: [],
+        rating: 8.2,
+        raw: m,
+      }));
+      if (active) setApiMovies(mapped);
+    }
+    load();
+    return () => { active = false; };
+  }, [searchQuery]);
+
+  const filteredMovies = apiMovies.filter(movie => {
     const searchMatch = searchQuery === "" || movie.title.toLowerCase().includes(searchQuery.toLowerCase());
-    return langMatch && genreMatch && searchMatch;
+    return searchMatch;
   });
 
   const handleLocationSelect = (loc) => {
@@ -121,7 +142,7 @@ const Movies = () => {
           <div 
             key={movie.id} 
             className="movie-card"
-            onClick={() => navigate(`/showtimes/${movie.id}`, { state: { ...movie } })}
+            onClick={() => navigate(`/showtimes/${movie.id}`, { state: { Title: movie.title, Poster: movie.poster, type: "movie" } })}
           >
             <div className="poster-container">
               <img src={movie.poster} alt={movie.title} className="movie-poster" />
@@ -131,10 +152,29 @@ const Movies = () => {
             </div>
             <div className="movie-info">
               <h3>{movie.title}</h3>
-              <p className="genre">{movie.genre.join(", ")}</p>
+              <p className="genre">{movie.raw?.Year ? movie.raw.Year : ""}</p>
             </div>
           </div>
         ))}
+      </div>
+      <div style={{ textAlign: "center", marginTop: 20 }}>
+        <button
+          className="filter-btn active"
+          onClick={async () => {
+            const more = await fetchMoviesBatch(apiMovies.length + 300);
+            const mapped = more.map((m) => ({
+              id: m.imdbID,
+              title: m.Title,
+              poster: m.Poster,
+              genre: [],
+              rating: 8.2,
+              raw: m,
+            }));
+            setApiMovies(mapped);
+          }}
+        >
+          Load more
+        </button>
       </div>
     </div>
   );

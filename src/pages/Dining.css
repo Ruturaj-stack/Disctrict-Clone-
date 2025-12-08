@@ -1,8 +1,152 @@
 .dining-page {
-  padding-top: 40px;
-  padding-bottom: 80px;
+  padding-bottom: 100px;
   background: #f9f9f9;
   min-height: 100vh;
+}
+
+.dine-hero {
+  padding-top: 30px;
+}
+
+.dine-hero-box {
+  background: linear-gradient(180deg, #efe9ff 0%, #f6f3ff 100%);
+  border: 1px solid #e8dfff;
+  border-radius: 28px;
+  padding: 40px 24px 50px;
+  text-align: center;
+  position: relative;
+}
+
+.dine-hero-title {
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #1c1c1c;
+  margin-bottom: 24px;
+}
+
+.dine-search {
+  width: 580px;
+  max-width: 92%;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid #e7e7e7;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  box-shadow: 0 8px 20px rgba(123, 64, 255, 0.08);
+}
+
+.dine-search-icon {
+  color: #7b40ff;
+}
+
+.dine-search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  color: #333;
+}
+
+.dine-search-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dine-subtitle-wrap {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.dine-subtitle-wrap.deals {
+  margin-top: 60px;
+}
+
+.dine-subtitle {
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.dine-underline {
+  display: block;
+  width: 240px;
+  height: 6px;
+  margin: 8px auto 0;
+  background: linear-gradient(90deg, #7b40ff 0%, #a074ff 100%);
+  border-radius: 999px;
+}
+
+.specials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 22px auto 6px;
+}
+
+.special-item h3 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.special-item p {
+  font-size: 14px;
+  color: #666;
+}
+
+.polaroid-trio,
+.polaroid-duo {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.polaroid-card {
+  width: 260px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transform: rotate(0deg);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.polaroid-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.polaroid-caption {
+  padding: 12px 14px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1c1c1c;
+}
+
+.polaroid-card:hover {
+  transform: translateY(-6px) rotate(0deg);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+.tilt-left {
+  transform: rotate(-4deg);
+}
+
+.tilt-right {
+  transform: rotate(4deg);
 }
 
 .dining-grid {
@@ -90,6 +234,26 @@
 }
 
 @media (max-width: 768px) {
+  .dine-hero-title {
+    font-size: 24px;
+  }
+
+  .specials-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 0 16px;
+  }
+
+  .polaroid-trio,
+  .polaroid-duo {
+    gap: 16px;
+    margin-top: 18px;
+  }
+
+  .polaroid-card {
+    width: 44%;
+  }
+
   .dining-grid {
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 20px;

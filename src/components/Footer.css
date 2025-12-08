@@ -31,7 +31,24 @@
   text-decoration: none;
 }
 
+/* Button styled like a link for accessibility compliance */
+.dz-nav-links button,
+.dz-link-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
 .dz-nav-links a:hover {
+  opacity: 0.7;
+}
+
+.dz-nav-links button:hover,
+.dz-link-btn:hover {
   opacity: 0.7;
 }
 

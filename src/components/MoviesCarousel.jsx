@@ -1,6 +1,6 @@
 import "./MoviesCarousel.css";
 import { useEffect, useState, useRef } from "react";
-import { fetchMovies } from "../utils/api";
+import { fetchMoviesBatch } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import SkeletonCard from "./SkeletonCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -12,11 +12,21 @@ const MoviesCarousel = ({ title, query }) => {
   const carouselRef = useRef(null);
 
   useEffect(() => {
+    let active = true;
     async function loadMovies() {
-      const data = await fetchMovies(query);
-      setMovies(data);
+      try {
+        const data = query
+          ? await fetchMoviesBatch(30, [query])
+          : await fetchMoviesBatch(30);
+        if (active) setMovies(data);
+      } catch (_) {
+        if (active) setMovies([]);
+      }
     }
     loadMovies();
+    return () => {
+      active = false;
+    };
   }, [query]);
 
   const handleNext = () => {

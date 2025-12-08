@@ -16,15 +16,16 @@ import Footer from "./components/Footer";
 import ShowTimes from "./pages/ShowTimes";
 import ActivityDetail from "./pages/ActivityDetail";
 import { AuthProvider } from "./context/AuthContext";
-import AuthModal from "./components/AuthModal";
 import EventDetail from "./pages/EventDetail";
+import Search from "./pages/Search";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <Header />    {/* now header reads context values */}
-        <AuthModal /> {/* Login / OTP modal */}
+        <Header />
         <Toaster position="top-center" reverseOrder={false} />
 
         <Routes>
@@ -37,6 +38,9 @@ function App() {
           <Route path="/event/:id" element={<EventDetail />} />
           <Route path="/movie/:id" element={<MovieDetail />} />
           <Route path="/showtimes/:id" element={<ShowTimes />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/confirmation" element={<Confirmation />} />

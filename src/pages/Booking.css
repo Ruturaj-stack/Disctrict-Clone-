@@ -6,7 +6,7 @@
   background: #ffffff;
   min-height: 100vh;
   padding-bottom: 120px;
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Okra", "Metropolis", "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .movie-booking-inner {
@@ -310,7 +310,7 @@
   max-width: 800px;
   margin: 0 auto;
   text-align: center;
-  font-family: "Inter", sans-serif;
+  font-family: "Okra", "Metropolis", "Inter", sans-serif;
 }
 
 .booking-header {

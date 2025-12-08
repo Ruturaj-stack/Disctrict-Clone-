@@ -11,13 +11,13 @@ const MovieDetail = () => {
     <div className="movie-detail-container">
       <img src={state.poster} alt={state.title} className="detail-poster" />
 
-      <h1>{state.title}</h1>
-
-      <p>Lorem ipsum dolor sit amet... (API description coming soon)</p>
-
-      <button className="book-btn" onClick={() => navigate("/booking", { state })}>
-        Book Tickets
-      </button>
+      <div className="detail-info">
+        <h1>{state.title}</h1>
+        <p>Lorem ipsum dolor sit amet... (API description coming soon)</p>
+        <button className="md-book-btn" onClick={() => navigate("/booking", { state })}>
+          Book Tickets
+        </button>
+      </div>
     </div>
   );
 };

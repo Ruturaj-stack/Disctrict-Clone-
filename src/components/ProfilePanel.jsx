@@ -18,6 +18,21 @@ const ProfilePanel = ({ open, onClose }) => {
     onClose();
   };
 
+  const handleChat = () => {
+    const url = "https://wa.me/918888888888?text=Hi%20District%20Support";
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  const handleTerms = () => {
+    navigate("/terms");
+    onClose();
+  };
+
+  const handlePrivacy = () => {
+    navigate("/privacy");
+    onClose();
+  };
+
   const handleLogout = () => {
     logout();
     onClose();
@@ -68,7 +83,7 @@ const ProfilePanel = ({ open, onClose }) => {
         {/* Support section */}
         <div className="profile-section">
           <div className="profile-section-title">Support</div>
-          <button className="profile-row">
+          <button className="profile-row" onClick={handleChat}>
             <div className="profile-row-left">
               <span className="profile-row-icon">💬</span>
               <span className="profile-row-label">Chat with us</span>
@@ -81,7 +96,7 @@ const ProfilePanel = ({ open, onClose }) => {
         <div className="profile-section">
           <div className="profile-section-title">More</div>
 
-          <button className="profile-row">
+          <button className="profile-row" onClick={handleTerms}>
             <div className="profile-row-left">
               <span className="profile-row-icon">📜</span>
               <span className="profile-row-label">Terms & Conditions</span>
@@ -89,7 +104,7 @@ const ProfilePanel = ({ open, onClose }) => {
             <ChevronRight size={18} className="profile-row-arrow" />
           </button>
 
-          <button className="profile-row">
+          <button className="profile-row" onClick={handlePrivacy}>
             <div className="profile-row-left">
               <span className="profile-row-icon">🔒</span>
               <span className="profile-row-label">Privacy Policy</span>

@@ -26,19 +26,37 @@ const removeBooking = (id) => {
         <p className="no-bookings">No bookings yet. Book your first ticket!</p>
       ) : (
         <div className="bookings-grid">
-          {bookings.map((b) => (
-            <div key={b.id} className="ticket-card">
-              <img src={b.poster} alt={b.title} />
-              <h3>{b.title}</h3>
-              <p><strong>Seats:</strong> {b.seats}</p>
-              <p><strong>Amount:</strong> ₹{b.price}</p>
-              <p><strong>Booked on:</strong> {b.time}</p>
+          {bookings.map((b) => {
+            const type = b.type || "movie";
+            const title = b.title || b.name;
+            const poster = b.poster || b.image;
+            return (
+              <div key={b.id} className="ticket-card">
+                <img src={poster} alt={title} />
+                <h3>{title}</h3>
+                <p className="tag-row">
+                  <span className={`tag ${type}`}>{type.toUpperCase()}</span>
+                </p>
 
-              <button className="delete-btn" onClick={() => removeBooking(b.id)}>
-                Cancel Booking
-              </button>
-            </div>
-          ))}
+                {type === "movie" && (
+                  <p><strong>Seats:</strong> {Array.isArray(b.seats) ? b.seats.join(", ") : b.seats}</p>
+                )}
+                {type === "dining" && (
+                  <p><strong>Reservation:</strong> {b.date} at {b.time}</p>
+                )}
+                {(type === "event" || type === "activity") && (
+                  <p><strong>Tickets:</strong> {b.tickets || 1}</p>
+                )}
+
+                <p><strong>Amount:</strong> ₹{b.amount || b.price}</p>
+                <p><strong>Booked on:</strong> {b.time}</p>
+
+                <button className="delete-btn" onClick={() => removeBooking(b.id)}>
+                  Cancel Booking
+                </button>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

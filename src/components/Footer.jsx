@@ -1,4 +1,5 @@
 import "./Footer.css";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -12,10 +13,10 @@ const Footer = () => {
         />
 
         <div className="dz-nav-links">
-          <a href="#">Terms & Conditions</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Contact Us</a>
-          <a href="#">List your events</a>
+          <Link to="/terms">Terms & Conditions</Link>
+          <Link to="/privacy">Privacy Policy</Link>
+          <a href="mailto:support@district.local">Contact Us</a>
+          <button type="button" className="dz-link-btn">List your events</button>
         </div>
 
         <div className="dz-qr-block">

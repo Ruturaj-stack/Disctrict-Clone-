@@ -4,6 +4,7 @@ import "./Booking.css";
 import { useState, useEffect } from "react";
 import { getBookings } from "../utils/storage";
 import toast from "react-hot-toast";
+import { useAuth } from "../context/AuthContext";
 
 import LoginModal from "../components/LoginModal";
 import OTPModal from "../components/OTPModal";
@@ -11,6 +12,7 @@ import OTPModal from "../components/OTPModal";
 const Booking = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
 
   // ===== HOOKS =====
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -24,6 +26,13 @@ const Booking = () => {
   const [generatedOtp, setGeneratedOtp] = useState("");
 
   const type = state?.type || "movie";
+  const displayTitle = state?.title || state?.name || "";
+  const displayImage = state?.poster || state?.image || "";
+  const displayLocation = state?.location || "";
+  const displayCategory =
+    type === "dining"
+      ? state?.cuisine || "Dining"
+      : state?.category || (type === "activity" ? "Activity" : "Event");
 
   // ===== LOGIN HANDLERS =====
   const handleLoginSuccess = (enteredPhone, otp) => {
@@ -116,7 +125,18 @@ const Booking = () => {
 
   const handleMovieNext = () => {
     if (selectedSeats.length === 0) return toast.error("Please select seats first");
-    setShowLogin(true);
+    if (isLoggedIn) {
+      navigate("/payment", {
+        state: {
+          ...state,
+          type: "movie",
+          seats: selectedSeats,
+          amount: movieTotalAmount,
+        },
+      });
+    } else {
+      setShowLogin(true);
+    }
   };
 
   const parsePrice = (priceStr) =>
@@ -124,7 +144,20 @@ const Booking = () => {
 
   const eventPrice = parsePrice(state?.price);
 
-  const handleNonMovieNext = () => setShowLogin(true);
+  const handleNonMovieNext = () => {
+    if (isLoggedIn) {
+      navigate("/payment", {
+        state: {
+          ...state,
+          type,
+          amount: eventPrice * ticketCount,
+          tickets: ticketCount,
+        },
+      });
+    } else {
+      setShowLogin(true);
+    }
+  };
 
   // ========== UI ==========
 
@@ -243,17 +276,17 @@ const Booking = () => {
         // EVENTS / SPORTS BOOKING VIEW
         <div className="event-booking-outer">
           <div className="event-booking-layout">
-            <div className="event-booking-banner"><img src={state.image} alt={state.title} /></div>
+            <div className="event-booking-banner"><img src={displayImage} alt={displayTitle} /></div>
 
             <div className="event-booking-card">
-              <h1 className="eb-title">{state.title}</h1>
-              <div className="eb-line">🏷 {state.category}</div>
+              <h1 className="eb-title">{displayTitle}</h1>
+              <div className="eb-line">🏷 {displayCategory}</div>
               <div className="eb-line">🕒 Daily, 6:00 PM onwards</div>
-              <div className="eb-line">📍 {state.location}</div>
+              <div className="eb-line">📍 {displayLocation}</div>
 
               <div className="eb-price-block">
                 <p className="label">Starts from</p>
-                <p className="price">{state.price}</p>
+                <p className="price">{state.price || "₹999 onwards"}</p>
               </div>
 
               <button className="eb-book-btn" onClick={handleNonMovieNext}>

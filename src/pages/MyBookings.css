@@ -48,6 +48,24 @@
   font-size: 15px;
 }
 
+.tag-row {
+  margin: 6px 0 8px;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  border: 1px solid #eee;
+  color: #555;
+}
+
+.tag.movie { background: #fff5f6; border-color: #ffd5da; color: #ef4f5f; }
+.tag.dining { background: #eef6ff; border-color: #d5e8ff; color: #246bdb; }
+.tag.event, .tag.activity { background: #f5f1ff; border-color: #e1d8ff; color: #7b40ff; }
+
 @media (max-width: 768px) {
   .bookings-grid {
     justify-content: center;
