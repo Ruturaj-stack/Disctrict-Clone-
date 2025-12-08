@@ -19,7 +19,7 @@ const heroData = [
   {
     id: 2,
     title: "Ed Sheeran Tour",
-    subtitle: "+–=÷× Tour | Mumbai",
+    subtitle: " Tour | Mumbai",
     image: edImg,      // ← here
     type: "event",
     price: "₹4,500 onwards"
